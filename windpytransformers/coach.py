@@ -292,7 +292,7 @@ class CoachTransformers(object):
     def train(self, dataset: Dataset, epochs: int, batchSize: int, accuGrad: int = 1, shuffle: bool = True,
               optimizerCreator: OptimizerCreator = BERTAdamWOptimizerCreator(), loadingWorkers: int = 1,
               forceDevice: str = None, verbose: bool = True, endOfEpoch: Optional[CoachTransformersValidateCallback] = None,
-              subsampling: float = -1, useClassWeights: bool= False):
+              subsampling: float = -1, useClassWeights: bool= False, accuGradNorm: bool = True):
         """
         Trains meter on given dataset.
 
@@ -305,6 +305,7 @@ class CoachTransformers(object):
         :param accuGrad: Values greater than one activates gradient accumulation. Gradient from batches will be
             accumulated for X steps and after that we will perform the optimization, which means, from the optimization
             point of view, that we have virtually batches of size X*BATCH_SIZE.
+            Also see accuGradNorm.
         :type accuGrad: int
         :param shuffle: True reshuffles data on every epoch.
         :type shuffle: bool
@@ -329,6 +330,8 @@ class CoachTransformers(object):
         :param useClassWeights: True uses class weights (usefull for imbalanced dataset) if the dataset provides them and the model
             can use them. Practicaly it means that the dataset must have the classWeights property and the model must have it also.
         :type useClassWeights: bool
+        :param accuGradNorm: Activates gradient normalization by number of accuGrads. Use eg. when you are using the mean for your loss.
+        :type accuGradNorm: bool
         """
         if verbose:
             Logger().log("Starts training")
@@ -387,6 +390,16 @@ class CoachTransformers(object):
 
                     # let's send the tensors to device and do the forward pass
                     loss = self.model(**dataMap)[0]
+
+                    if accuGradNorm:
+                        # normalize the loss
+                        if iBatch + actAccuGrad > len(dataLoader):
+                            # we are not able to have whole virtual batch
+                            normBy = len(dataLoader) - (iBatch - (accuGrad - actAccuGrad))
+                        else:
+                            # this batch will be whole
+                            normBy = accuGrad
+                        loss = loss / normBy
 
                     # calculate gradients according to calculated loss
                     if device.type == "cuda" and self._mixedPrecisionActivated:
