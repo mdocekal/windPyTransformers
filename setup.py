@@ -25,7 +25,6 @@ setup_args = dict(
         'windpytorchutils @ git+ssh://git@github.com/windionleaf/windPyTransformers.git#egg=windpytorchutils',
         'tqdm>=4.41.1',
         'torch>=1.3.1',
-        'apex==0.1',
         'transformers>=2.3.0'
     ]
 )
