@@ -464,6 +464,7 @@ class CoachTransformers(Generic[ConfigT]):
         Use trained model on given dataset samples. For each title edit measures how funny it is.
 
         :param dataset: Dataset you want to use.
+            If that dataset implements own collate_fn method than it will be automatically used.
         :type dataset: Dataset
         :param batchSize: Size of one batch.
         :type batchSize: int
@@ -490,7 +491,8 @@ class CoachTransformers(Generic[ConfigT]):
                                                          optimizerCreator=None,
                                                          loadingWorkers=loadingWorkers,
                                                          forceDevice=forceDevice,
-                                                         modelTrain=False)
+                                                         modelTrain=False,
+                                                         dataLoaderCollate=dataset.collate_fn if callable(getattr(dataset, "collate_fn", None)) else None,)
 
         with torch.no_grad():
             updateBar = 0
