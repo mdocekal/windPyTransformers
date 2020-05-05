@@ -303,6 +303,7 @@ class CoachTransformers(Generic[ConfigT]):
         Trains meter on given dataset.
 
         :param dataset: Dataset that should be used for training.
+            If that dataset implements own collate_fn method than it will be automatically used.
         :type dataset: Dataset
         :param epochs: Number of training epochs.
         :type epochs: int
@@ -361,6 +362,7 @@ class CoachTransformers(Generic[ConfigT]):
                                                                         loadingWorkers=loadingWorkers,
                                                                         forceDevice=forceDevice,
                                                                         modelTrain=True,
+                                                                        dataLoaderCollate=dataset.collate_fn if callable(getattr(dataset, "collate_fn", None)) else None,
                                                                         sampler=sampler)
 
         numberOfIterations = ceil((len(dataLoader) / accuGrad))
