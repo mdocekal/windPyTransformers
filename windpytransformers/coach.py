@@ -15,7 +15,7 @@ import torch
 from torch.utils.data import Sampler, DataLoader, Dataset
 from tqdm import tqdm
 from transformers import PreTrainedModel
-from typing import Optional, Tuple, Callable, Dict, Generator, Any
+from typing import Optional, Tuple, Callable, Dict, Generator, Any, TypeVar, Generic
 
 from windpytorchutils.optimizers import OptimizerCreator, BERTAdamWOptimizerCreator
 from windpytorchutils.samplers import IndicesSubsampler
@@ -53,7 +53,12 @@ class CoachTransformersValidateCallback(ABC):
         pass
 
 
-class CoachTransformers(object):
+ConfigT = TypeVar('ConfigT', bound='CoachTransformersConfig')
+"""
+Generic type for configuration.
+"""
+
+class CoachTransformers(object, Generic[ConfigT]):
     """
     This class gathers boilerplate code that is usually used for model training of transformers models from huggingface implementations https://huggingface.co/transformers/#.
     """
@@ -172,12 +177,12 @@ class CoachTransformers(object):
         self.config.mixed_precision = isMixed
 
     @property
-    def config(self) -> CoachTransformersConfig:
+    def config(self) -> ConfigT:
         """
         Config of the model.
 
         :return: The config of the model.
-        :rtype: CoachTransformersConfig
+        :rtype: ConfigT
         """
         return self.model.config
 
