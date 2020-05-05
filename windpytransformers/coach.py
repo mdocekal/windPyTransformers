@@ -64,9 +64,6 @@ class CoachTransformers(Generic[ConfigT]):
     This class gathers boilerplate code that is usually used for model training of transformers models from huggingface implementations https://huggingface.co/transformers/#.
     """
 
-    TRAIN_LOG_FREQUENCY = 100
-    """Number of processed batches before log output."""
-
     BAR_INTERVAL = 10
     """Minimal number of seconds for update."""
 
