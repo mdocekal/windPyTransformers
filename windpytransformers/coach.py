@@ -58,6 +58,7 @@ ConfigT = TypeVar('ConfigT', bound='CoachTransformersConfig')
 Generic type for configuration.
 """
 
+
 class CoachTransformers(object, Generic[ConfigT]):
     """
     This class gathers boilerplate code that is usually used for model training of transformers models from huggingface implementations https://huggingface.co/transformers/#.
