@@ -21,8 +21,8 @@ setup_args = dict(
     keywords=['utils', 'PyTorch', 'transformers', 'general usage'],
     url='https://github.com/windionleaf/windPyTransformers',
     install_requires=[
-        'windpyutils @ https://github.com/windionleaf/windPyUtils/archive/master.zip',
-        'windpytorchutils @ https://github.com/windionleaf/windPyTorchUtils/archive/master.zip',
+        'windpyutils @ git+https://github.com/windionleaf/windPyUtils.git@master#egg=windpyutils-0',
+        'windpytorchutils @ git+https://github.com/windionleaf/windPyTorchUtils.git@master#egg=windpytorchutils-0',
         'tqdm>=4.41.1',
         'torch>=1.3.1',
         'transformers>=2.3.0'
