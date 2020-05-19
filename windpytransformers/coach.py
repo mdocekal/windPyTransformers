@@ -297,7 +297,7 @@ class CoachTransformers(Generic[ConfigT]):
               forceDevice: str = None, verbose: bool = True, endOfEpoch: Optional[CoachTransformersValidateCallback] = None,
               subsampling: float = -1, useClassWeights: bool= False, accuGradNorm: bool = True):
         """
-        Trains meter on given dataset.
+        Trains on given dataset.
 
         :param dataset: Dataset that should be used for training.
             If that dataset implements own collate_fn method than it will be automatically used.
