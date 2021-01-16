@@ -11,12 +11,12 @@ with open('README.md') as readme_file:
 
 setup_args = dict(
     name='windPyTransformers',
-    version='1.0.0',
+    version='1.0.1',
     description='Utils for transformers models.',
     long_description_content_type="text/markdown",
     long_description=README,
     license='The Unlicense',
-    packages=find_packages(),
+    packages=find_packages(exclude=("tests",)),
     author='Martin Dočekal',
     keywords=['utils', 'PyTorch', 'transformers', 'general usage'],
     url='https://github.com/windionleaf/windPyTransformers',
