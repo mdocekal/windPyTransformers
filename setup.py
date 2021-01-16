@@ -16,7 +16,7 @@ setup_args = dict(
     long_description_content_type="text/markdown",
     long_description=README,
     license='The Unlicense',
-    packages=find_packages(exclude=("tests",)),
+    packages=find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),
     author='Martin Dočekal',
     keywords=['utils', 'PyTorch', 'transformers', 'general usage'],
     url='https://github.com/windionleaf/windPyTransformers',
