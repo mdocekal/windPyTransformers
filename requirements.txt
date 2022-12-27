@@ -1,7 +1,7 @@
 git+git://github.com/windionleaf/windPyUtils#egg=windpyutils
 git+git://github.com/windionleaf/windPyTorchUtils#egg=windpytorchutils
 tqdm==4.41.1
-setuptools==39.0.1
+setuptools==65.5.1
 torch==1.4.0
 typing==3.7.4.1
 transformers==2.3.0
